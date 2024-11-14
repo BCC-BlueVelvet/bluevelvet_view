@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom"; // Importa useParams para capturar o id da URL
 import axios from "axios";
-import "../css/UpdateProduct.css"; // Importa estilos personalizados, se houver
-import "bootstrap/dist/css/bootstrap.min.css"; // Importa o Bootstrap para os estilos de layout
+import "../css/UpdateProduct.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const UpdateProduct = ({ initialProductId }) => {
-  // Hook para manter o ID do produto que será atualizado
-  const [productId] = useState(initialProductId);
+const UpdateProduct = () => {
+  // Captura o id do produto diretamente da URL
+  const { id: productId } = useParams();
 
   // Hooks para guardar os valores dos campos do produto
   const [productName, setProductName] = useState("");
@@ -17,16 +17,32 @@ const UpdateProduct = ({ initialProductId }) => {
 
   // useEffect roda assim que o componente é montado, buscando dados do produto pelo ID
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/api/v1/products/${productId}`)
-      .then((response) => {
-        const { name, brand, category, price } = response.data;
-        setProductName(name);
-        setBrand(brand);
-        setCategory(category);
-        setPrice(price);
-      })
-      .catch((error) => console.error("Error fetching product:", error)); // Log de erro caso falhe
+    if (productId) {
+      // Verifica se o ID está disponível
+      // Substitua `http://localhost:8080/api/v1/products/${productId}` por `/api/v1/products/${productId}`
+      axios
+        /* .get(`/api/v1/products/${productId}`)  MUDEI POR CAUSA DA JSON O JSON Server espera a rota products diretamente */
+        .get(`/api/products/${productId}`)
+        .then((response) => {
+          const { name, brand, category, price } = response.data;
+          setProductName(name);
+          setBrand(brand);
+          setCategory(category);
+          setPrice(price);
+        })
+        .catch((error) => console.error("Error fetching product:", error));
+      /* antes do proxy */
+      /* axios
+        .get(`http://localhost:8080/api/v1/products/${productId}`)
+        .then((response) => {
+          const { name, brand, category, price } = response.data;
+          setProductName(name);
+          setBrand(brand);
+          setCategory(category);
+          setPrice(price);
+        })
+        .catch((error) => console.error("Error fetching product:", error)); // Log de erro caso falhe */
+    }
   }, [productId]);
 
   // Função chamada ao salvar; atualiza o produto no backend
@@ -35,10 +51,24 @@ const UpdateProduct = ({ initialProductId }) => {
       name: productName,
       brand: brand,
       category: category,
-      price: parseFloat(price), // parseFloat para garantir que o preço seja numérico
+      price: parseFloat(price),
     };
 
+    // Substitua `http://localhost:8080/api/v1/products/${productId}` por `/api/v1/products/${productId}`
     axios
+      /* .put(`/api/v1/products/${productId}`, updatedProduct) MUDEI POR CAUSA DO JSON, O JSON Server espera a rota products diretamente */
+      .put(`/api/products/${productId}`, updatedProduct)
+      .then((response) => {
+        console.log("Product updated:", response.data);
+        alert("Product updated successfully!");
+        navigate("/find-products");
+      })
+      .catch((error) => {
+        console.error("Error updating product:", error);
+        alert("There was an error updating the product.");
+      });
+    /* antes do proxy */
+    /* axios
       .put(`http://localhost:8080/api/v1/products/${productId}`, updatedProduct)
       .then((response) => {
         console.log("Product updated:", response.data);
@@ -48,7 +78,7 @@ const UpdateProduct = ({ initialProductId }) => {
       .catch((error) => {
         console.error("Error updating product:", error);
         alert("There was an error updating the product."); // Alerta em caso de erro
-      });
+      }); */
   };
 
   // Função para retornar à lista de produtos sem salvar
@@ -63,7 +93,6 @@ const UpdateProduct = ({ initialProductId }) => {
         <h2 className="text-center mb-4">Update Product</h2>
 
         <form className="bg-light p-4 rounded shadow">
-          {/* Campo de entrada para o nome do produto */}
           <div className="mb-3">
             <label htmlFor="productName" className="form-label">
               Product Name:
@@ -79,7 +108,6 @@ const UpdateProduct = ({ initialProductId }) => {
             />
           </div>
 
-          {/* Campo de entrada para a marca */}
           <div className="mb-3">
             <label htmlFor="brand" className="form-label">
               Brand:
@@ -95,7 +123,6 @@ const UpdateProduct = ({ initialProductId }) => {
             />
           </div>
 
-          {/* Campo de entrada para a categoria */}
           <div className="mb-3">
             <label htmlFor="category" className="form-label">
               Category:
@@ -111,7 +138,6 @@ const UpdateProduct = ({ initialProductId }) => {
             />
           </div>
 
-          {/* Campo de entrada para o preço */}
           <div className="mb-4">
             <label htmlFor="price" className="form-label">
               Price:
@@ -128,7 +154,6 @@ const UpdateProduct = ({ initialProductId }) => {
             />
           </div>
 
-          {/* Botões para salvar ou retornar */}
           <div className="d-flex justify-content-between">
             <button
               type="button"
