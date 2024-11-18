@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueVelvet Music Store</title>
+    <link rel="stylesheet" href="find_all_style.css">
+</head>
+<body>
+    <header>
+        <h1>BlueVelvet Music Store</h1>
+        <p>Your one-stop shop for musical instruments and gear! 🎵</p>
+    </header>
+
+    <main>
+        <section id="search-section">
+            <input type="text" id="search-box" placeholder="Search for products..." />
+            <button id="search-button" onclick="searchProducts()">Enter</button>
+        </section>
+
+        <section id="action-buttons">
+            <button onclick="window.location.href='add_product.html'">Add Product</button>
+        </section>
+
+        <section id="product-list">
+            <h2>Product List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table-body">
+                    <!-- Example rows -->
+                    <tr data-id="1">
+                        <td>1</td>
+                        <td><img src="Guitar 1.jpg" alt="Guitar" class="product-image"></td>
+                        <td class="product-name">Guitar</td>
+                        <td class="product-brand">Fender</td>
+                        <td class="product-category">String Instrument</td>
+                        <td>$1200</td>
+                        <td>
+                            <button class="view-button" onclick="viewProduct(1)">View Product</button>
+                            <button class="edit-button" onclick="window.location.href='update_product.html?id=1'">Edit Product</button>
+                            <button class="delete-button" onclick="deleteProduct(1)">Delete Product</button>
+                        </td>
+                    </tr>
+                    <tr data-id="2">
+                        <td>2</td>
+                        <td><img src="Drum Kit 1.jpg" alt="Drum Kit" class="product-image"></td>
+                        <td class="product-name">Drum Kit</td>
+                        <td class="product-brand">Yamaha</td>
+                        <td class="product-category">Percussion</td>
+                        <td>$800</td>
+                        <td>
+                            <button class="view-button" onclick="viewProduct(2)">View Product</button>
+                            <button class="edit-button" onclick="window.location.href='update_product.html?id=2'">Edit Product</button>
+                            <button class="delete-button" onclick="deleteProduct(2)">Delete Product</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BlueVelvet Music Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to simulate viewing a product
+        function viewProduct(id) {
+            alert(`Viewing product with ID: ${id}`);
+        }
+
+        // Function to delete a specific product
+        function deleteProduct(id) {
+            if (confirm(`Are you sure you want to delete the product with ID: ${id}?`)) {
+                const row = document.querySelector(`tr[data-id="${id}"]`);
+                if (row) {
+                    row.remove();
+                    alert(`Product with ID: ${id} has been deleted.`);
+                } else {
+                    alert(`Product with ID: ${id} not found.`);
+                }
+            }
+        }
+
+        // Function to search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-box').value.toLowerCase();
+            const rows = document.querySelectorAll('#product-table-body tr');
+
+            rows.forEach(row => {
+                const name = row.querySelector('.product-name').textContent.toLowerCase();
+                const brand = row.querySelector('.product-brand').textContent.toLowerCase();
+                const category = row.querySelector('.product-category').textContent.toLowerCase();
+
+                if (name.includes(searchTerm) || brand.includes(searchTerm) || category.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+         // Add event listener for Enter key press in search box
+         document.getElementById('search-box').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                searchProducts();
+            }
+        });
+    </script>
+</body>
+</html>
