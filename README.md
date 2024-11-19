@@ -1,1 +1,0 @@
-# bluevelvet_view
