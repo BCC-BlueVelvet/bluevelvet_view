@@ -17,7 +17,7 @@ const ProductForm = ({ onSave, initialProductId = "" }) => {
       // Substitua `http://localhost:8080/api/v1/products/${initialProductId}` por `/api/v1/products/${initialProductId}`
       axios
         /* .get(`/api/v1/products/${initialProductId}`) MUDEI POR CAUSA DO JSON, O JSON Server espera a rota products diretamente*/
-        .get(`/api/products/${initialProductId}`)
+        .get(`http://localhost:8080/api/v1/products/${initialProductId}`)
         .then((response) => {
           console.log("Product data:", response.data);
           const { id, name, brand, category, price } = response.data;

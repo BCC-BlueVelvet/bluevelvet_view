@@ -20,9 +20,10 @@ const UpdateProduct = () => {
     if (productId) {
       // Verifica se o ID está disponível
       // Substitua `http://localhost:8080/api/v1/products/${productId}` por `/api/v1/products/${productId}`
+      /* .get(`/api/v1/products/${productId}`)  MUDEI POR CAUSA DA JSON O JSON Server espera a rota products diretamente */
+      // Use a URL relativa ao invés da absoluta
       axios
-        /* .get(`/api/v1/products/${productId}`)  MUDEI POR CAUSA DA JSON O JSON Server espera a rota products diretamente */
-        .get(`/api/products/${productId}`)
+        .get(`/api/v1/products/${productId}`) // Proxy redireciona para http://localhost:8080/v1/products/${productId}
         .then((response) => {
           const { name, brand, category, price } = response.data;
           setProductName(name);
@@ -31,6 +32,7 @@ const UpdateProduct = () => {
           setPrice(price);
         })
         .catch((error) => console.error("Error fetching product:", error));
+
       /* antes do proxy */
       /* axios
         .get(`http://localhost:8080/api/v1/products/${productId}`)
@@ -55,9 +57,9 @@ const UpdateProduct = () => {
     };
 
     // Substitua `http://localhost:8080/api/v1/products/${productId}` por `/api/v1/products/${productId}`
+    /* .put(`/api/v1/products/${productId}`, updatedProduct) MUDEI POR CAUSA DO JSON, O JSON Server espera a rota products diretamente */
     axios
-      /* .put(`/api/v1/products/${productId}`, updatedProduct) MUDEI POR CAUSA DO JSON, O JSON Server espera a rota products diretamente */
-      .put(`/api/products/${productId}`, updatedProduct)
+      .put(`/api/v1/products/${productId}`, updatedProduct) // Proxy redireciona corretamente
       .then((response) => {
         console.log("Product updated:", response.data);
         alert("Product updated successfully!");
@@ -67,6 +69,7 @@ const UpdateProduct = () => {
         console.error("Error updating product:", error);
         alert("There was an error updating the product.");
       });
+
     /* antes do proxy */
     /* axios
       .put(`http://localhost:8080/api/v1/products/${productId}`, updatedProduct)
