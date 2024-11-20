@@ -8,7 +8,7 @@ const UpdateProduct = () => {
   const { id: productId } = useParams();
   const navigate = useNavigate();
 
-  // Estado inicial com todos os campos
+  // Estado inicial seguro
   const [productData, setProductData] = useState({
     name: "",
     shortDescription: "",
@@ -32,21 +32,42 @@ const UpdateProduct = () => {
       axios
         .get(`/api/v1/products/${productId}`)
         .then((response) => {
-          setProductData(response.data);
+          // Garantir que os campos não sejam `null` ou `undefined`
+          const product = response.data || {};
+          setProductData({
+            name: product.name || "",
+            shortDescription: product.shortDescription || "",
+            fullDescription: product.fullDescription || "",
+            brand: product.brand || "",
+            category: product.category || "",
+            price: product.price?.toString() || "",
+            pictureUrl: product.pictureUrl || "",
+            stock: product.stock || false,
+            length: product.length?.toString() || "",
+            width: product.width?.toString() || "",
+            height: product.height?.toString() || "",
+            weight: product.weight?.toString() || "",
+            cost: product.cost?.toString() || "",
+            detailName: product.detailName || "",
+            detailValue: product.detailValue || "",
+          });
         })
         .catch((error) => console.error("Error fetching product:", error));
     }
   }, [productId]);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProductData({ ...productData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setProductData({
+      ...productData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const handleSave = () => {
     axios
       .put(`/api/v1/products/${productId}`, productData)
-      .then((response) => {
+      .then(() => {
         alert("Product updated successfully!");
         navigate("/find-products");
       })
@@ -65,6 +86,7 @@ const UpdateProduct = () => {
       <h1>BlueVelvet Music Store</h1>
       <h2>Update Product</h2>
       <form>
+        {/* Campos principais */}
         <input
           type="text"
           name="name"
@@ -73,7 +95,6 @@ const UpdateProduct = () => {
           onChange={handleInputChange}
           required
         />
-
         <input
           type="text"
           name="brand"
@@ -82,7 +103,6 @@ const UpdateProduct = () => {
           onChange={handleInputChange}
           required
         />
-
         <input
           type="text"
           name="category"
@@ -91,7 +111,6 @@ const UpdateProduct = () => {
           onChange={handleInputChange}
           required
         />
-
         <input
           type="number"
           name="price"
@@ -101,7 +120,6 @@ const UpdateProduct = () => {
           step="0.01"
           required
         />
-
         <input
           type="text"
           name="pictureUrl"
@@ -110,6 +128,7 @@ const UpdateProduct = () => {
           onChange={handleInputChange}
         />
 
+        {/* Descrições */}
         <textarea
           name="shortDescription"
           placeholder="Short Description"
@@ -117,7 +136,6 @@ const UpdateProduct = () => {
           onChange={handleInputChange}
           required
         ></textarea>
-
         <textarea
           name="fullDescription"
           placeholder="Full Description"
@@ -126,20 +144,18 @@ const UpdateProduct = () => {
           required
         ></textarea>
 
+        {/* Estoque */}
         <label>
           <input
             type="checkbox"
             name="stock"
             checked={productData.stock}
-            onChange={(e) =>
-              handleInputChange({
-                target: { name: "stock", value: e.target.checked },
-              })
-            }
+            onChange={handleInputChange}
           />
           In Stock
         </label>
 
+        {/* Dimensões */}
         <input
           type="number"
           name="length"
@@ -149,7 +165,6 @@ const UpdateProduct = () => {
           step="0.01"
           required
         />
-
         <input
           type="number"
           name="width"
@@ -159,7 +174,6 @@ const UpdateProduct = () => {
           step="0.01"
           required
         />
-
         <input
           type="number"
           name="height"
@@ -169,7 +183,6 @@ const UpdateProduct = () => {
           step="0.01"
           required
         />
-
         <input
           type="number"
           name="weight"
@@ -180,6 +193,7 @@ const UpdateProduct = () => {
           required
         />
 
+        {/* Custo e detalhes */}
         <input
           type="number"
           name="cost"
@@ -189,7 +203,6 @@ const UpdateProduct = () => {
           step="0.01"
           required
         />
-
         <input
           type="text"
           name="detailName"
@@ -197,7 +210,6 @@ const UpdateProduct = () => {
           value={productData.detailName}
           onChange={handleInputChange}
         />
-
         <input
           type="text"
           name="detailValue"
@@ -206,10 +218,15 @@ const UpdateProduct = () => {
           onChange={handleInputChange}
         />
 
-        <button type="button" onClick={handleSave}>
+        {/* Botões */}
+        <button type="button" onClick={handleSave} className="btn btn-primary">
           Save
         </button>
-        <button type="button" onClick={handleReturn}>
+        <button
+          type="button"
+          onClick={handleReturn}
+          className="btn btn-secondary"
+        >
           Return
         </button>
       </form>
