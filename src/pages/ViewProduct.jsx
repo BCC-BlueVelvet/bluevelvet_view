@@ -16,6 +16,7 @@ const ViewProduct = () => {
       try {
         const response = await axios.get(`/api/v1/products/${id}`);
         setProduct(response.data);
+        console.log("Product fetched:", response.data); // Inspeciona os dados
       } catch (err) {
         console.error("Error fetching product", err);
         setError("Failed to load product details. Please try again.");
@@ -43,6 +44,14 @@ const ViewProduct = () => {
           <h5 className="mb-0">{product.name}</h5>
         </div>
         <div className="card-body">
+          <div className="text-center mb-4">
+            <img
+              src={product.pictureUrl}
+              alt={product.name}
+              className="img-fluid"
+              style={{ maxHeight: "300px", maxWidth: "100%" }}
+            />
+          </div>
           <p>
             <strong>Short Description:</strong> {product.shortDescription}
           </p>
