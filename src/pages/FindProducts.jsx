@@ -33,10 +33,8 @@ const FindProducts = () => {
   );
 
   // Função para excluir um produto
-  const deleteProduct = async (id) => {
-    if (
-      window.confirm(`Tem certeza que deseja excluir o produto com o id ${id}?`)
-    ) {
+  const deleteProduct = async (id, name) => {
+    if (window.confirm(`Tem certeza que deseja excluir o produto "${name}"?`)) {
       try {
         await axios.delete(`/api/v1/products/${id}`);
         alert("Produto excluído com sucesso.");
@@ -123,7 +121,7 @@ const FindProducts = () => {
                   </button>
                   <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => deleteProduct(product.id)}
+                    onClick={() => deleteProduct(product.id, product.name)}
                   >
                     Delete
                   </button>
