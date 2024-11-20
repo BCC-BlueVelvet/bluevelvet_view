@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Im
 import UpdateProduct from "./pages/UpdateProduct"; // Importa a página de atualização de produto
 import FindProducts from "./pages/FindProducts"; // Importa a página de busca de produtos
 import AddProduct from "./pages/AddProduct"; // Importa o novo componente de adição de produtos
+import ViewProduct from "./pages/ViewProduct"; // Caminho correto para o componente
 
 function App() {
   return (
@@ -11,10 +12,9 @@ function App() {
       {/* Componente principal que habilita o roteamento na aplicação */}
       <Routes>
         {/* Define as rotas da aplicação */}
-
         {/* Rota para o componente de busca de produtos */}
         <Route path="/find-products" element={<FindProducts />} />
-
+        <Route path="/view-product/:id" element={<ViewProduct />} />
         {/* Rota para o componente de atualização de produto com ID como parâmetro */}
         <Route path="/update-product/:id" element={<UpdateProduct />} />
         <Route path="/add-product" element={<AddProduct />} /> {/* Nova rota */}

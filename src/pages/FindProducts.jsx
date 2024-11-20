@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/find_all_style.css";
 
-
 const FindProducts = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,7 +34,9 @@ const FindProducts = () => {
 
   // Função para excluir um produto
   const deleteProduct = async (id) => {
-    if (window.confirm(`Tem certeza que deseja excluir o produto com ID ${id}?`)) {
+    if (
+      window.confirm(`Tem certeza que deseja excluir o produto com o id ${id}?`)
+    ) {
       try {
         await axios.delete(`/api/v1/products/${id}`);
         alert("Produto excluído com sucesso.");
@@ -48,10 +49,12 @@ const FindProducts = () => {
   };
 
   return (
-    <div className="container my-5" >
+    <div className="container my-5">
       <header className="text-center mb-4">
         <h1>BlueVelvet Music Store</h1>
-        <p className="text-muted">Your one-stop shop for musical instruments and gear! 🎵</p>
+        <p className="text-muted">
+          Your one-stop shop for musical instruments and gear! 🎵
+        </p>
       </header>
 
       {/* Busca */}
@@ -108,7 +111,7 @@ const FindProducts = () => {
                 <td>
                   <button
                     className="btn btn-info btn-sm me-2"
-                    onClick={() => alert(`Viewing product: ${product.id}`)}
+                    onClick={() => navigate(`/view-product/${product.id}`)}
                   >
                     View
                   </button>
