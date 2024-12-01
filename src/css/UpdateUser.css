@@ -8,3 +8,6 @@ body * {
 input {
   height: 5vh;
 }
+option {
+  color: black;
+}
