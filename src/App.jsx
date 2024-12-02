@@ -5,6 +5,7 @@ import UpdateProduct from "./pages/UpdateProduct"; // Importa a página de atual
 import FindProducts from "./pages/FindProducts"; // Importa a página de busca de produtos
 import AddProduct from "./pages/AddProduct"; // Importa o novo componente de adição de produtos
 import ViewProduct from "./pages/ViewProduct"; // Caminho correto para o componente
+import UpdateUser from "./pages/UpdateUser"; // Importa o componente de atualização de usuário
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
       {/* Componente principal que habilita o roteamento na aplicação */}
       <Routes>
         {/* Define as rotas da aplicação */}
+        // Dentro das rotas:
+        <Route path="/update-user/:id" element={<UpdateUser />} />
         {/* Rota para o componente de busca de produtos */}
         <Route path="/find-products" element={<FindProducts />} />
         <Route path="/view-product/:id" element={<ViewProduct />} />
