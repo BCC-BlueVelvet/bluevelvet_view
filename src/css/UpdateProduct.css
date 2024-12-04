@@ -1,0 +1,6 @@
+body {
+  background-color: rgba(72, 110, 146, 0.356);
+  display: flex;
+  justify-content: center;
+  color: aliceblue;
+}

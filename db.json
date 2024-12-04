@@ -1,0 +1,18 @@
+{
+  "products": [
+    {
+      "name": "ktcgdfg",
+      "brand": "arroz",
+      "category": "gh",
+      "price": 45468,
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "name": "Amplificador Marshall",
+      "brand": "Marshall",
+      "category": "Equipamento de Áudio",
+      "price": 799.99
+    }
+  ]
+}

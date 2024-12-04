@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User</title>
+    <link rel="stylesheet" href="add_user_style.css">
+</head>
+<body>
+    <header>
+        <h1>BlueVelvet Music Store</h1>
+    </header>
+
+    <section id="add-user-section">
+        <div class="add-user-container">
+            <h2>Add New User</h2>
+            <form id="add-user-form">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" required>
+
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="photos">Photos (Link)</label>
+                <input type="url" id="photos" name="photos">
+
+                <label for="enabled">Enabled</label>
+                <select id="enabled" name="enabled">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+
+                <label>Permissions</label>
+                <div class="permissions-box">
+                    <label><input type="checkbox" name="permissions" value="administrator"> Administrator</label>
+                    <label><input type="checkbox" name="permissions" value="sales_manager"> Sales Manager</label>
+                    <label><input type="checkbox" name="permissions" value="edit"> Edit</label>
+                    <label><input type="checkbox" name="permissions" value="shipping_manager"> Shipping Manager</label>
+                    <label><input type="checkbox" name="permissions" value="assistant"> Assistant</label>
+                </div>
+                
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 BlueVelvet Music Store. All rights reserved.</p>
+        <p>User Management System</p>
+    </footer>
+</body>
+</html>
