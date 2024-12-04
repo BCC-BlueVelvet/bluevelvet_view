@@ -1,0 +1,13 @@
+body * {
+  color: white;
+}
+.fundo {
+  background-color: rgb(9, 9, 26);
+  width: 30vw;
+}
+input {
+  height: 5vh;
+}
+option {
+  color: black;
+}
