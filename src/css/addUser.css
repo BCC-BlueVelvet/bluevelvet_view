@@ -1,0 +1,49 @@
+body * {
+  color: #202020;
+}
+h1 {
+  color: rgb(0, 0, 165);
+}
+.add-user-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.add-user-container h2 {
+  text-align: center;
+}
+
+#add-user-form label {
+  display: block;
+  margin-top: 10px;
+}
+
+#add-user-form input,
+#add-user-form select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.permissions-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

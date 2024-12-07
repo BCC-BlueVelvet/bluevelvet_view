@@ -7,6 +7,7 @@ import AddProduct from "./pages/AddProduct"; // Importa o novo componente de adi
 import ViewProduct from "./pages/ViewProduct"; // Caminho correto para o componente
 import UpdateUser from "./pages/UpdateUser"; // Importa o componente de atualização de usuário
 import FindUsers from "./pages/FindUsers";
+import AddUser from "./pages/AddUser";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/update-product/:id" element={<UpdateProduct />} />
         <Route path="/add-product" element={<AddProduct />} /> {/* Nova rota */}
         <Route path="/users" element={<FindUsers />} />
+        <Route path="/add-user" element={<AddUser />} />
       </Routes>
     </Router>
   );
