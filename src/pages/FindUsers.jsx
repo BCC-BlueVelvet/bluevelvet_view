@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; 
-import "../css/findUsers.css"; 
+import { useNavigate } from "react-router-dom";
+import "../css/findUsers.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const FindUsers = () => {
@@ -11,15 +11,14 @@ const FindUsers = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Função para carregar todos os usuários
   const fetchUsers = async () => {
     setLoading(true);
     setError(null);
 
     try {
       const response = await axios.get("/api/v1/users");
-      setUsers(response.data); 
-      setFilteredUsers(response.data); 
+      setUsers(response.data);
+      setFilteredUsers(response.data);
     } catch (err) {
       setError("Erro ao buscar usuários.");
     } finally {
@@ -27,10 +26,9 @@ const FindUsers = () => {
     }
   };
 
-  // Função de busca de usuários (filtra localmente no front-end)
   const searchUser = () => {
     if (!searchName.trim()) {
-      setFilteredUsers(users); // Mostra todos os usuários se o campo de busca estiver vazio
+      setFilteredUsers(users);
       return;
     }
 
@@ -62,7 +60,6 @@ const FindUsers = () => {
 
   const navigate = useNavigate();
 
-  // Carrega os usuários assim que o componente é montado
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -70,22 +67,22 @@ const FindUsers = () => {
   return (
     <div style={{ padding: "20px" }}>
       <h1>Gerenciamento de Usuários</h1>
-      <div style={{ marginBottom: "20px" }}>
+      <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
         <input
           type="text"
           placeholder="Buscar usuário pelo nome..."
           value={searchName}
-          onChange={(e) => setSearchName(e.target.value)} // Atualiza o valor do campo de busca
+          onChange={(e) => setSearchName(e.target.value)}
           style={{
             padding: "8px",
             fontSize: "16px",
             width: "300px",
-            marginRight: "10px",
           }}
         />
         <button onClick={searchUser}>Buscar</button>
-        <button onClick={fetchUsers} style={{ marginLeft: "10px" }}>
-          Mostrar Todos
+        <button onClick={fetchUsers}>Mostrar Todos</button>
+        <button onClick={() => navigate("/add-user/")}>
+          Adicionar Usuário
         </button>
       </div>
 
@@ -100,6 +97,7 @@ const FindUsers = () => {
               <th>ID</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Status</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -108,13 +106,14 @@ const FindUsers = () => {
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>
-                  {user.firstName} {user.lastName} 
+                  {user.firstName} {user.lastName}
                 </td>
                 <td>{user.email}</td>
                 <td>{user.enabled ? "Ativo" : "Inativo"}</td>
                 <td>
-                  <button onClick={() => navigate("/add-user/")}>Add</button>
-                  <button onClick={() => navigate(`/update-user/${user.id}`)}>Update</button>
+                  <button onClick={() => navigate(`/update-user/${user.id}`)}>
+                    Update
+                  </button>
                   <button onClick={() => deleteUser(user.id)}>Delete</button>
                 </td>
               </tr>
