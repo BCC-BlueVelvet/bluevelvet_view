@@ -24,9 +24,7 @@ const AddUser = () => {
     if (type === "checkbox") {
       setFormData((prevData) => ({
         ...prevData,
-        roles: checked
-          ? [...prevData.roles, value] // Adiciona a role
-          : prevData.roles.filter((role) => role !== value), // Remove a role
+        roles: checked ? [value] : [], // Substitui a lista de roles com a role selecionada
       }));
     } else if (type === "select-one") {
       setFormData((prevData) => ({
